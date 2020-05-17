@@ -22,6 +22,8 @@ menu_modify.add_row(['4.修改好评度'])
 
 def save():
     book_data = open('data/book_data.txt', 'a')
+    book_data.seek(0)
+    book_data.truncate()
     for book in all_books_list:
         for data in book:
             book_data.write(str(data))
@@ -40,6 +42,9 @@ def load():
     for i in range(len(content)):
         content[i] = content[i][:len(content[i])-1]
         content[i] = content[i].split()
+    for book in content:
+        book[1] = float(book[1])
+        book[3] = float(book[3])
     book_data.close()
     return content
 
@@ -89,7 +94,7 @@ def modify():
     try:
         name = input('请输入您要修改的书名：')
     except:
-        print('输入错误')
+        print('没有找到该书')
     else:
         for book in all_books_list:
             if book[0].find(name) != -1:
@@ -126,7 +131,7 @@ def modify():
 
 def search():
     searched_list = []
-    keyword = input('请输入要查找的书名：')
+    keyword = input('请输入要查找的关键词：')
     for book in all_books_list:
         if book[0].find(keyword) != -1:
             searched_list.append(book)
@@ -137,18 +142,19 @@ def search():
         print_books(searched_list)
 
 
-def price():
-    reverse = bool(input('输入是否降序（True/False）：'))
+def book_sort(key):
+    reverse = bool(int(input('输入是否降序（1/0）：')))
     all_books_list_temp = all_books_list[:]
-    all_books_list_temp.sort(key=lambda x: x[1], reverse=reverse)
+    all_books_list_temp.sort(key=lambda x: x[key], reverse=reverse)
     print_books(all_books_list_temp)
+
+
+def price():
+    book_sort(1)
 
 
 def star():
-    reverse = bool(input('输入是否降序（True/False）：'))
-    all_books_list_temp = all_books_list[:]
-    all_books_list_temp.sort(key=lambda x: x[3], reverse=reverse)
-    print_books(all_books_list_temp)
+    book_sort(3)
 
 
 options = {

@@ -3,5 +3,6 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/book_data.txt" charset="GBK" />
     <file url="file://$PROJECT_DIR$/data.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/data/book_data.txt" charset="GBK" />
   </component>
 </project>
