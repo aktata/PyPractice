@@ -111,7 +111,7 @@ def star():
     print_books(all_books_list_temp)
 
 
-funcs = {
+options = {
     1: show,
     2: add,
     3: delete,
@@ -131,7 +131,7 @@ def main():
             print('输入类型错误')
         else:
             if 1 <= option <= 7:
-                funcs[option]()
+                options[option]()
             elif option == 8:
                 break
             else:
