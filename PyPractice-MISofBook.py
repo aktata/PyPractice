@@ -1,19 +1,21 @@
 import os
+import pickle
 import prettytable as pt
 
-all_books_list = [
-    ['Python编程:从入门到实践', 62.8, '人民邮电出版社', 99.9],
-    ['Python zen', 62.8, "O'Reilly", 99.9],
-    ['笨办法学Python3', 46.1, '人民邮电出版社', 98.9],
-    ['Python核心编程（第3版）', 98, '人民邮电出版社', 99.2],
-    ['Python编程快速上手：让繁琐工作自动化', 68.3, '人民邮电出版社', 99.1],
-    ['了不起的JavaScript工程师：从前端到全端高级进阶', 78.2, '电子工业出版社', 97.9],
-    ['移动Web前端高效开发实战：HTML5 + CSS3 + JavaScript', 64.8, '电子工业出版社', 98.3],
-    ['JavaScript程序设计基础与范例教程（第2版）', 46.5, '电子工业出版社', 99.4],
-    ['JavaScript权威指南（第6版）', 109.8, '机械工业出版社', 99.9],
-    ['区块链项目开发指南', 48.7, '机械工业出版社', 99.4],
-    ['区块链安全技术指南', 56.9, '机械工业出版社', 99.3]
-]
+# all_books_list = [
+#     ['Python编程:从入门到实践', 62.8, '人民邮电出版社', 99.9],
+#     ['Python zen', 62.8, "O'Reilly", 99.9],
+#     ['笨办法学Python3', 46.1, '人民邮电出版社', 98.9],
+#     ['Python核心编程（第3版）', 98, '人民邮电出版社', 99.2],
+#     ['Python编程快速上手：让繁琐工作自动化', 68.3, '人民邮电出版社', 99.1],
+#     ['了不起的JavaScript工程师：从前端到全端高级进阶', 78.2, '电子工业出版社', 97.9],
+#     ['移动Web前端高效开发实战：HTML5 + CSS3 + JavaScript', 64.8, '电子工业出版社', 98.3],
+#     ['JavaScript程序设计基础与范例教程（第2版）', 46.5, '电子工业出版社', 99.4],
+#     ['JavaScript权威指南（第6版）', 109.8, '机械工业出版社', 99.9],
+#     ['区块链项目开发指南', 48.7, '机械工业出版社', 99.4],
+#     ['区块链安全技术指南', 56.9, '机械工业出版社', 99.3]
+# ]
+all_books_list = []
 
 menu = pt.PrettyTable()
 menu.field_names = ['选项']
@@ -25,6 +27,23 @@ menu.add_row(['5.查询图书'])
 menu.add_row(['6.按价格排序'])
 menu.add_row(['7.按好评排序'])
 menu.add_row(['8.退出'])
+
+
+def save_variable(v, filename):
+    f = open(filename, 'wb')
+    pickle.dump(v, f)
+    f.close()
+    return filename
+
+
+def load_variavle(filename):
+    f = open(filename, 'rb')
+    r = pickle.load(f)
+    f.close()
+    return r
+
+
+all_books_list = load_variavle('data.txt')
 
 
 def print_books(book_list):
@@ -124,6 +143,7 @@ options = {
 
 def main():
     while True:
+
         print(menu)
         try:
             option = int(input('请输入您的选项：'))
@@ -133,6 +153,7 @@ def main():
             if 1 <= option <= 7:
                 options[option]()
             elif option == 8:
+                save_variable(all_books_list, 'data.txt')
                 break
             else:
                 print('输入数字错误')
